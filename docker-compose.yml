@@ -1,0 +1,31 @@
+services:
+  employee-api:
+    build:
+      context: ./EmployeeApi
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sql-server;Database=EmployeeDb;User Id=sa;Password=YourStrong@Password;TrustServerCertificate=True;
+    depends_on:
+      - sql-server
+
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Password
+    ports:
+      - "1433:1433"
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=sql-server
+      - ADMINER_DESIGN=nette
+    depends_on:
+      - sql-server
