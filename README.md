@@ -1,6 +1,6 @@
 # Employee API
 
-A .NET 8 Web API for managing employees.
+A .NET 9 Web API for managing employees.
 
 ## How to Run
 
